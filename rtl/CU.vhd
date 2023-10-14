@@ -34,7 +34,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity CU is
     Port ( opcode,func7 : in STD_LOGIC_VECTOR (6 downto 0);
            func3 : in STD_LOGIC_VECTOR (2 downto 0);
-           wer,alu_scr,alu2reg,wem,imm_rd,ci_en : out STD_LOGIC;
+           wer,alu_scr,alu2reg,wem,imm_rd,ci_en,men : out STD_LOGIC;
            alu_op : out STD_LOGIC_VECTOR (3 downto 0));
 end CU;
 
@@ -46,7 +46,7 @@ begin
 process (opcode,func3,func7)
 begin 
 alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0';
-imm_rd<='0';ci_en<='0';
+imm_rd<='0';ci_en<='0';men<='0';
 case opcode is -- case general 
 
 -- operaciones tipo R 
@@ -54,10 +54,10 @@ when "0110011"=>
     case func3 is -- case func3 
     
     when "000"=> if func7="0100000" then alu_scr<='1';
-    alu_op<="0001";alu2reg<='1';wem<='0';
+    alu_op<="0001";alu2reg<='1';wem<='0';wer<='1';
     
     elsif func7="0000000" then alu_scr<='1';
-    alu_op<="0001";alu2reg<='1';wem<='0';
+    alu_op<="0000";alu2reg<='1';wem<='0';wer<='1';
     
     else
       
@@ -65,31 +65,31 @@ when "0110011"=>
     end if; -- add, sub 
     
     when "001"=> alu_scr<='1';
-    alu_op<="0010";alu2reg<='1';wem<='0'; --sll
+    alu_op<="0010";alu2reg<='1';wem<='0';wer<='1'; --sll
     
     when "010" =>  alu_scr<='1';
-    alu_op<="0100";alu2reg<='1';wem<='0';--slt
+    alu_op<="0100";alu2reg<='1';wem<='0';wer<='1';--slt
     
     when "011"=> alu_scr<='1';
-    alu_op<="0110";alu2reg<='1';wem<='0';--sllu
+    alu_op<="0110";alu2reg<='1';wem<='0';wer<='1';--sllu
     
     when "100" => alu_scr<='1';
-    alu_op<="1000";alu2reg<='1';wem<='0';--xor
+    alu_op<="1000";alu2reg<='1';wem<='0';wer<='1';--xor
     
     when "101" => if func7 ="0100000" then  alu_scr<='1';
-    alu_op<="1011";alu2reg<='1';wem<='0';--sra
+    alu_op<="1011";alu2reg<='1';wem<='0';wer<='1';--sra
     
     
     elsif func7="0000000" then alu_scr<='1';
-    alu_op<="1010";alu2reg<='1';wem<='0';--srl
+    alu_op<="1010";alu2reg<='1';wem<='0';wer<='1';--srl
     
     else alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0';-- evadir latch
     end if;
     
-    when "110" => alu_op<="1100"; wer<='0';alu_scr<='0';
+    when "110" => alu_op<="1100"; wer<='1';alu_scr<='0';
     alu2reg<='0';wem<='0';-- or 
     
-    when "111"=> alu_op<="1110"; wer<='0';alu_scr<='0';
+    when "111"=> alu_op<="1110"; wer<='1';alu_scr<='0';
     alu2reg<='0';wem<='0';-- and 
     
     when others =>
@@ -111,26 +111,26 @@ when "0010011" =>
         alu_op<="1011";alu2reg<='1'; wer<='1';-- srli
         
         end if; 
-    when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0';imm_rd<='0'; 
+    when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0';imm_rd<='0';men<='0'; 
     end case;
     when "0100011"=> --instrucciones de tipo s 
         case func3 is 
-        when "000"=> alu_op<="0000";imm_rd<='1'; wem<='1';--sb
-        when "001"=> alu_op<="0000"; imm_rd<='1';wem<='1';--sh
-        when "010"=> alu_op<="0000"; imm_rd<='1';wem<='1';--sw
+        when "000"=> alu_op<="0000";imm_rd<='1'; wem<='1';men<='1';--sb
+        when "001"=> alu_op<="0000"; imm_rd<='1';wem<='1';men<='1';--sh
+        when "010"=> alu_op<="0000"; imm_rd<='1';wem<='1';men<='1';--sw
         
-        when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0'; imm_rd<='0';
+        when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0'; imm_rd<='0';men<='0';
         end case; 
     
     when "0000011" =>-- instucciones de tipo L 
         case func3 is 
-        when "000" => alu_op<="0000";wer<='1';
-        when "001" => alu_op<="0000";wer<='1';
-        when "010" => alu_op<="0000";wer<='1';
-        when "100" => alu_op<="0000";wer<='1';
-        when "101" => alu_op<="0000";wer<='1';
+        when "000" => alu_op<="0000";wer<='1';men<='1';
+        when "001" => alu_op<="0000";wer<='1';men<='1';
+        when "010" => alu_op<="0000";wer<='1';men<='1';
+        when "100" => alu_op<="0000";wer<='1';men<='1';
+        when "101" => alu_op<="0000";wer<='1';men<='1';
         
-        when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0'; imm_rd<='0';
+        when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0'; imm_rd<='0';men<='0';
         end case; 
     when "1100011"=> --instrucciones de tipo B
         case func3 is 
@@ -152,7 +152,7 @@ when "0010011" =>
     
     
     
-when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0'; imm_rd<='0';
+when others => alu_op<="0000"; wer<='0';alu_scr<='0';alu2reg<='0';wem<='0'; imm_rd<='0';men<='0';
 
 end case; 
 end process;
