@@ -31,13 +31,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity unidor is
+entity decoder is
     Port ( a1 : in STD_LOGIC_VECTOR (6 downto 0);
            a2 : in STD_LOGIC_VECTOR (4 downto 0);
            sal : out STD_LOGIC_VECTOR (11 downto 0));
-end unidor;
+end decoder;
 
-architecture Behavioral of unidor is
+architecture Behavioral of decoder is
 
 begin
 sal<=a1&a2;
