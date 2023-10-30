@@ -9,7 +9,7 @@ Hard-processors are those that have their architecture defined from the factory 
 
 ### The compared processors and their clock frequencies are as follows:
 - **RISCV-EC: 50MHz**
-- ATmega 328p (Arduino Uno): 16MHz
+- 8bit AVR Microcontroller (Microchip ATmega 328p): 16MHz
 - ARM Cortex-M0+ (Raspberry Pi Pico,): 125MHz
 - ARM Cortex-A9 (Zynq-7000): 650MHz 
     
