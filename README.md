@@ -10,8 +10,8 @@ Hard-processors are those that have their architecture defined from the factory 
 ### The compared processors and their clock frequencies are as follows:
 - **RISCV-EC: 50MHz**
 - ATmega 328p (Arduino 1): 16MHz
-- ARM CORTEX M0+ (Raspberry Pi Pico,): 125MHz
-- ARM CORTEX A9 (Zynq-7000): 650MHz 
+- ARM Cortex M0+ (Raspberry Pi Pico,): 125MHz
+- ARM Cortex A9 (Zynq-7000): 650MHz 
     
 ## ⭐ When using this resource, please cite the original publication:
 - [Montesdeoca, G., Asanza, V., Estrada, R., Valeriano, I., Muneeb, M.A. (2023). Softprocessor RISCV-EC for Edge Computing Applications. In: Barolli, L. (eds) Innovative Mobile and Internet Services in Ubiquitous Computing . IMIS 2023. Lecture Notes on Data Engineering and Communications Technologies, vol 177. Springer, Cham. https://doi.org/10.1007/978-3-031-35836-4_23](https://link.springer.com/chapter/10.1007/978-3-031-35836-4_23)
